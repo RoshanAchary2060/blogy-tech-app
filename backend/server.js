@@ -3,6 +3,9 @@ const dotenv = require("dotenv");
 const usersRouter = require('./routes/users/usersRouter');
 const connectDB = require('./config/database');
 const { notFound, globalErrorHandler } = require("./middlewares/globalErrorHandler");
+const categoriesRouter = require("./routes/categories/categoriesRouter");
+const postsRouter = require("./routes/posts/postsRouter");
+const commentsRouter = require("./routes/comments/commentsRouter");
 
 //! Create an express app
 const app = express();
@@ -16,13 +19,22 @@ connectDB();
 //! Setup the middleware
 app.use(express.json());
 
-//?Setup the Router
+//!Setup the User Router
 app.use("/api/v1/users", usersRouter);
 
-//?Not found error handler
+//!Setup the Category Router
+app.use("/api/v1/categories", categoriesRouter)
+
+//!Setup the Post Router
+app.use('/api/v1/posts', postsRouter)
+
+//!SETUP THE COMMENT ROUTER
+app.use('/api/v1/comments', commentsRouter)
+
+//!Not found error handler
 app.use(notFound)
 
-//?Setup the global error handler
+//!Setup the global error handler
 app.use(globalErrorHandler)
 const PORT = process.env.PORT || 9080;
 app.listen(PORT, () => {

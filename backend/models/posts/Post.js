@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        default: '',
+        required: true,
     },
     claps: {
         type: Number,
@@ -42,6 +42,10 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }],
+    dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment',
@@ -49,7 +53,14 @@ const postSchema = new mongoose.Schema({
 },
     {
         timestamps: true,
-    }
+        toJSON: {
+            virtuals: true
+        },
+        toObject: {
+            virtuals: true
+        }
+    },
+
 );
 //! convert schema to model
 const Post = mongoose.model("Post", postSchema);
