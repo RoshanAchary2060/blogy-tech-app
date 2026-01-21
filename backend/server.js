@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const dotenv = require("dotenv");
 const usersRouter = require('./routes/users/usersRouter');
@@ -9,6 +10,11 @@ const commentsRouter = require("./routes/comments/commentsRouter");
 
 //! Create an express app
 const app = express();
+
+app.use(cors({
+  origin: "http://localhost:5173", // frontend URL
+  credentials: true, // if you want to allow cookies/auth
+}));
 
 //! load the environment variable
 dotenv.config();
